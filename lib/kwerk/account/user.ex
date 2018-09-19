@@ -125,5 +125,6 @@ defmodule Kwerk.Account.User do
     |> cast(attrs, [:password, :reset_code])
     |> validate_required([:password, :reset_code])
     |> validate_confirmation(:password)
+    |> put_password_hash
   end
 end
