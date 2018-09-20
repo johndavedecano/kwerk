@@ -15,5 +15,5 @@ config :kwerk, Kwerk.Repo,
   username: "postgres",
   password: "postgres",
   database: "kwerk_test",
-  hostname: "localhost",
+  hostname: "127.0.0.1",
   pool: Ecto.Adapters.SQL.Sandbox

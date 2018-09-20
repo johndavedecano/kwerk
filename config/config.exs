@@ -24,7 +24,9 @@ config :logger, :console,
 
 # Third party configs
 config :pbkdf2_elixir, rounds: 1
-config :kwerk, Kwerk.Guardian,
+
+config :kwerk, Kwerk.Utils.Guardian,
+  ttl: { 30, :days },
   issuer: "kwerk",
   secret_key: "N1FdL2JJe+2GCojYCvuHHfoXStnD+EJwxFcLgnKjhSK9asr0w23eJXKnLaUiF9or"
 
