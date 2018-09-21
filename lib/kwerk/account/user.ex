@@ -87,6 +87,18 @@ defmodule Kwerk.Account.User do
     end
   end
 
+  def create_admin(%User{} = user, attrs) do
+    user
+    |> cast(attrs, [:name, :email, :password])
+    |> unique_constraint(:email)
+    |> validate_required([:name, :email, :password])
+    |> validate_format(:email, ~r/@/)
+    |> validate_confirmation(:password)
+    |> put_password_hash
+    |> put_activation_code
+    |> put_activation_code_expiration
+  end
+
   @doc false
   def register(%User{} = user, attrs) do
     user
