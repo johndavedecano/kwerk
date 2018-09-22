@@ -32,6 +32,10 @@ defmodule Kwerk.Account.User do
     timestamps()
   end
 
+  # @required_fields ~w()
+
+  # @optional_fields ~w()
+
   @doc false
   defp put_activation_code(changeset) do
     case changeset do
@@ -87,16 +91,14 @@ defmodule Kwerk.Account.User do
     end
   end
 
-  def create_admin(%User{} = user, attrs) do
+  def create(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :password])
+    |> cast(attrs, [:name, :email, :password, :role, :status, :countries_id])
     |> unique_constraint(:email)
-    |> validate_required([:name, :email, :password])
+    |> validate_required([:name, :email, :password, :role, :status, :countries_id])
     |> validate_format(:email, ~r/@/)
     |> validate_confirmation(:password)
     |> put_password_hash
-    |> put_activation_code
-    |> put_activation_code_expiration
   end
 
   @doc false

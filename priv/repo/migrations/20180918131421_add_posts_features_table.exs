@@ -3,8 +3,8 @@ defmodule Kwerk.Repo.Migrations.AddPostsFeaturesTable do
 
   def up do
     create table(:posts_features) do
-      add :posts_id, references("posts")
-      add :features_id, references("features")
+      add :post_id, references("posts")
+      add :feature_id, references("features")
     end
   end
 

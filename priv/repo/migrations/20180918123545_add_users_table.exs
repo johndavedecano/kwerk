@@ -10,7 +10,7 @@ defmodule Kwerk.Repo.Migrations.AddUsersTable do
       add :address, :string
       add :city, :string
       add :state, :string
-      add :countries_id, references("countries")
+      add :country_id, references("countries")
       add :lon, :string
       add :lat, :string
       add :status, :string, default: "inactive"
@@ -22,7 +22,7 @@ defmodule Kwerk.Repo.Migrations.AddUsersTable do
       timestamps()
     end
 
-    create index(:users, [:countries_id])
+    create index(:users, [:country_id])
     create index(:users, [:status])
     create index(:users, [:role])
     unique_index(:users, [:email])
@@ -30,7 +30,7 @@ defmodule Kwerk.Repo.Migrations.AddUsersTable do
 
   def down do
     drop table(:users)
-    drop index(:users, [:countries_id])
+    drop index(:users, [:country_id])
     drop index(:users, [:status])
     drop index(:users, [:role])
     drop index(:users, [:email])

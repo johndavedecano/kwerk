@@ -4,9 +4,9 @@ defmodule Kwerk.Repo.Migrations.AddPostsTable do
   def up do
     create table(:posts) do
 
-      add :users_id, references("users")
-      add :categories_id, references("categories")
-      add :countries_id, references("countries")
+      add :user_id, references("users")
+      add :category_id, references("categories")
+      add :country_id, references("countries")
 
       add :title, :string
       add :description, :string
@@ -30,12 +30,12 @@ defmodule Kwerk.Repo.Migrations.AddPostsTable do
       timestamps()
     end
 
-    create index(:posts, [:users_id])
+    create index(:posts, [:user_id])
     create index(:posts, [:title])
     create index(:posts, [:city])
     create index(:posts, [:state])
-    create index(:posts, [:countries_id])
-    create index(:posts, [:categories_id])
+    create index(:posts, [:country_id])
+    create index(:posts, [:category_id])
     create index(:posts, [:payment_type])
     create index(:posts, [:payment_amount])
     create index(:posts, [:status])
@@ -43,12 +43,12 @@ defmodule Kwerk.Repo.Migrations.AddPostsTable do
 
   def down do
     drop table(:posts)
-    drop index(:posts, [:users_id])
+    drop index(:posts, [:user_id])
     drop index(:posts, [:title])
     drop index(:posts, [:city])
     drop index(:posts, [:state])
-    drop index(:posts, [:countries_id])
-    drop index(:posts, [:categories_id])
+    drop index(:posts, [:country_id])
+    drop index(:posts, [:category_id])
     drop index(:posts, [:payment_type])
     drop index(:posts, [:payment_amount])
     drop index(:posts, [:status])

@@ -2,8 +2,8 @@ defmodule Kwerk.Repo.Migrations.AddPostsSchedulesTable do
   use Ecto.Migration
 
   def up do
-    create table(:posts_schedules) do
-      add :posts_id, references("posts")
+    create table(:schedules) do
+      add :post_id, references("posts")
       add :mon, :boolean, default: false
       add :tue, :boolean, default: false
       add :wed, :boolean, default: false
@@ -15,6 +15,6 @@ defmodule Kwerk.Repo.Migrations.AddPostsSchedulesTable do
   end
 
   def down do
-    drop table(:posts_schedules)
+    drop table(:schedules)
   end
 end
