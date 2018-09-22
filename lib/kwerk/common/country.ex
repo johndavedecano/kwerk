@@ -15,6 +15,5 @@ defmodule Kwerk.Common.Country do
     |> cast(attrs, [:name, :code])
     |> validate_required([:name, :code])
     |> unique_constraint(:code)
-    |> validate_required([])
   end
 end
