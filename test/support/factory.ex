@@ -8,7 +8,26 @@ defmodule Kwerk.Factory do
   alias Kwerk.Posting.Feature
   # alias Kwerk.Posting.Post
   alias Kwerk.Common.Country
+  alias Kwerk.Account.User
 
+  def user_factory do
+    %User{
+      name: sequence("John Dave Decano"),
+      email: sequence(:email, &"johndavedecano#{&1}@gmail.com"),
+      avatar: %{},
+      password_hash: Comeonin.Pbkdf2.hashpwsalt("password"),
+      address: sequence("144-3 West Bank Floodway Maybunga"),
+      city: sequence("Pasig"),
+      state: sequence("Metro Manila"),
+      status: "active",
+      role: "user",
+      country: build(:country)
+    }
+  end
+
+  def make_admin(user) do
+    %{user | role: "admin"}
+  end
 
   def country_factory do
     %Country{

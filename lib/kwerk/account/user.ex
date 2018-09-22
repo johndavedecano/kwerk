@@ -1,9 +1,8 @@
 defmodule Kwerk.Account.User do
   use Ecto.Schema
 
-  alias Kwerk.Common
+  alias Kwerk.Common.Country
   alias Kwerk.Constants
-  alias Kwerk.Account.User
   alias Kwerk.Utils.Randomizer
   alias Comeonin.Pbkdf2
 
@@ -15,6 +14,7 @@ defmodule Kwerk.Account.User do
     field :avatar, :map
     field :password_hash, :string
     field :password, :string, virtual: true
+    field :password_confirmation, :string, virtual: true
     field :address, :string
     field :city, :string
     field :state, :string
@@ -27,14 +27,13 @@ defmodule Kwerk.Account.User do
     field :activation_code, :string
     field :activation_code_expiration, :integer
 
-    belongs_to(:country, Common.Country, foreign_key: :country_id)
+    belongs_to :country, Country
 
     timestamps()
   end
 
-  # @required_fields ~w()
-
-  # @optional_fields ~w()
+  @required_fields ~w(name email password password_confirmation role country_id)
+  @optional_fields ~w(address city state lon lat status)
 
   @doc false
   defp put_activation_code(changeset) do
@@ -91,54 +90,32 @@ defmodule Kwerk.Account.User do
     end
   end
 
-  def create(%User{} = user, attrs) do
+  @valid_statuses ["active", "deleted", "inactive"]
+
+  def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :password, :role, :status, :country_id])
-    |> unique_constraint(:email)
-    |> validate_required([:name, :email, :password, :role, :status, :country_id])
-    |> validate_format(:email, ~r/@/)
+    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> validate_required([:name, :email, :password, :password_confirmation, :role])
     |> validate_confirmation(:password)
+    |> validate_format(:email, ~r/@/)
+    |> validate_inclusion(:status, @valid_statuses)
+    |> unique_constraint(:email)
+    |> foreign_key_constraint(:country_id)
+    |> cast_assoc(:country)
     |> put_password_hash
   end
 
-  @doc false
-  def register(%User{} = user, attrs) do
+
+  def update_changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :password])
+    |> cast(attrs, @required_fields ++ @optional_fields)
+    |> validate_required([:name, :email, :role])
+    |> validate_confirmation(:password)
+    |> validate_format(:email, ~r/@/)
+    |> validate_inclusion(:status, @valid_statuses)
     |> unique_constraint(:email)
-    |> validate_required([:name, :email, :password])
-    |> validate_format(:email, ~r/@/)
-    |> validate_confirmation(:password)
-    |> put_password_hash
-    |> put_activation_code
-    |> put_activation_code_expiration
-  end
-
-  @doc false
-  def login(%User{} = user, attrs) do
-    user
-    |> cast(attrs, [:email, :password])
-    |> validate_required([:email, :password])
-    |> validate_format(:email, ~r/@/)
-    |> validate_confirmation(:password)
-  end
-
-  @doc false
-  def forgot(%User{} = user, attrs) do
-    user
-    |> cast(attrs, [:email])
-    |> validate_required([:email])
-    |> validate_format(:email, ~r/@/)
-    |> put_reset_code
-    |> put_reset_code_expiration
-  end
-
-  @doc false
-  def reset(%User{} = user, attrs) do
-    user
-    |> cast(attrs, [:password, :reset_code])
-    |> validate_required([:password, :reset_code])
-    |> validate_confirmation(:password)
+    |> foreign_key_constraint(:country_id)
+    |> cast_assoc(:country)
     |> put_password_hash
   end
 end
