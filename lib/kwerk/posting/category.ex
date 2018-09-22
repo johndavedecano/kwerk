@@ -13,6 +13,7 @@ defmodule Kwerk.Posting.Category do
     feature
     |> cast(attrs, [:name, :status])
     |> validate_required([:name, :status])
+    |> validate_inclusion(:status, ["active", "deleted", "inactive"])
     |> unique_constraint(:name)
   end
 end
