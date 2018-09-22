@@ -42,7 +42,8 @@ defmodule Kwerk.Mixfile do
       {:guardian, "~> 1.0"},
       {:pbkdf2_elixir, "~> 0.12"},
       {:comeonin, "~> 4.0"},
-      {:ex_machina, "~> 2.2", only: :test}
+      {:ex_machina, "~> 2.2", only: :test},
+      {:poison, "~> 3.1"}
     ]
   end
 

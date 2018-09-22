@@ -12,7 +12,7 @@ defmodule Kwerk.Account.User do
   schema "users" do
     field :name, :string
     field :email, :string, unique: true
-    field :avatar, :string
+    field :avatar, :map
     field :password_hash, :string
     field :password, :string, virtual: true
     field :address, :string
@@ -27,7 +27,7 @@ defmodule Kwerk.Account.User do
     field :activation_code, :string
     field :activation_code_expiration, :integer
 
-    belongs_to(:country, Common.Country, foreign_key: :countries_id)
+    belongs_to(:country, Common.Country, foreign_key: :country_id)
 
     timestamps()
   end
@@ -93,9 +93,9 @@ defmodule Kwerk.Account.User do
 
   def create(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :password, :role, :status, :countries_id])
+    |> cast(attrs, [:name, :email, :password, :role, :status, :country_id])
     |> unique_constraint(:email)
-    |> validate_required([:name, :email, :password, :role, :status, :countries_id])
+    |> validate_required([:name, :email, :password, :role, :status, :country_id])
     |> validate_format(:email, ~r/@/)
     |> validate_confirmation(:password)
     |> put_password_hash
