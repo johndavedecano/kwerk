@@ -30,7 +30,6 @@ defmodule Kwerk.Posting.Post do
     belongs_to :country, Country
     has_one :schedule, PostSchedule
     has_many :images, PostImage
-
     timestamps()
   end
 
@@ -63,7 +62,8 @@ defmodule Kwerk.Posting.Post do
     :thu,
     :fri,
     :sat,
-    :sun
+    :sun,
+    :images
   ]
 
   @required_fields [
@@ -84,7 +84,7 @@ defmodule Kwerk.Posting.Post do
     :status,
     :user_id,
     :category_id,
-    :country_id,
+    :country_id
   ]
 
   @doc false
