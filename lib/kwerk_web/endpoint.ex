@@ -37,6 +37,9 @@ defmodule KwerkWeb.Endpoint do
 
   plug KwerkWeb.Router
 
+  plug Plug.Static,
+    at: "/uploads", from: Path.expand("./uploads"), gzip: false
+
   @doc """
   Callback invoked for dynamically configuring the endpoint.
 

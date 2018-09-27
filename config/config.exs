@@ -30,6 +30,8 @@ config :kwerk, Kwerk.Utils.Guardian,
   issuer: "kwerk",
   secret_key: "N1FdL2JJe+2GCojYCvuHHfoXStnD+EJwxFcLgnKjhSK9asr0w23eJXKnLaUiF9or"
 
+config :arc,
+  storage: Arc.Storage.Local
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

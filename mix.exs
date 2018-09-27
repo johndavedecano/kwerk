@@ -33,6 +33,7 @@ defmodule Kwerk.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:arc, "~> 0.10.0"},
       {:phoenix, "~> 1.3.4"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},

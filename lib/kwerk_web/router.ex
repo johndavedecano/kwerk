@@ -20,6 +20,7 @@ defmodule KwerkWeb.Router do
 
   scope "/api/secure", KwerkWeb.Secure do
     pipe_through :api
+    post "/upload", UploadController, :create
   end
 
   scope "/api/global", KwerkWeb.Global do
